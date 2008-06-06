@@ -1,1 +1,3 @@
+* Ability to create an iterator with present()
+
 * Remove Engines dependency

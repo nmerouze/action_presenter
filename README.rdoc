@@ -2,9 +2,9 @@
 
 Inspired by : http://www.caboo.se/articles/2007/8/23/simple-presenters
 
-== Warning
+== Requirements
 
-Works only with Edge Rails.
+* Rails 2.1 and later.
 
 == Install
 
@@ -20,9 +20,21 @@ Here's a presenter :
 		end
 	end
 
-And to call it in the views, there are 2 helpers :
+And to call it in the views, there are present() and p() :
 
 	<%= present(@article).title %> or <%= p(@article).title %>
+
+Instead of a tradionnal loop or iterator, you can use present() :
+
+	<% present(@articles) do |article| %>
+		<h2><%= article.title %></h2>
+	<% end %>
+
+If you want to use methods from the source record inside the iterator (or somewhere else), you just have to use source() or s() :
+
+	<% present(@articles) do |article| %>
+		<h2><%= h source(article).title %></h2>
+	<% end %>
 
 == Render files
 
@@ -38,11 +50,11 @@ You can also render files for a presenter method :
 		end
 	end
 
-The partial for title will be located in app/presenters/article/_title.html.erb :
+The partial for title will be located in app/presenters/article/title.html.erb :
 
 	<%=h article.title %>
 
-The partial for body will be located in app/presenters/article/_body.html.erb :
+The partial for body will be located in app/presenters/article/body.html.erb :
 
 	<%= article.body + msg %>
 

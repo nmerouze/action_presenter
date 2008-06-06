@@ -20,7 +20,7 @@ module ActionPresenter
     protected
     
       def render(view, options = {})
-        file = "#{name}/_#{view}"
+        file = "#{name}/#{view}"
         action_view = ActionView::Base.new([], {}, @controller)
         action_view.finder.view_paths = ActionPresenter.view_paths
         action_view.render_file(file, true, options.merge(@name => @source))
@@ -30,12 +30,29 @@ module ActionPresenter
   module Helpers
     @@presenters = {}
     
-    def present(record, name = nil)
-      name = record.class.name if name.nil?
-      @@presenters[name.underscore.to_sym] ||= "#{name.classify}Presenter".constantize.new(@controller, record)
+    def present(records)
+      presenters = []
+      records = [records] if not records.is_a? Array
+      
+      records.each do |record|
+        @@presenters[record.to_s] = "#{record.class.name.classify}Presenter".constantize.new(@controller, record) unless @@presenters.has_key? record.to_s
+        
+        if block_given?
+          yield @@presenters[record.to_s]
+        else
+          presenters << @@presenters[record.to_s]
+          return presenters.first if records.size == 1
+        end
+      end
+      
+      presenters
     end
-
     alias :p :present
+    
+    def source(record)
+      record.source
+    end
+    alias :s :source
   end
 end
 
