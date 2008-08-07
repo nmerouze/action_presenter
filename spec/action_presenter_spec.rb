@@ -9,8 +9,9 @@ module BeforeSpec
 end
 
 describe ActionPresenter::Helpers do
-  include ActionPresenter::Helpers
+  
   include BeforeSpec
+  include ActionPresenter::Helpers
   
   before { load_env }
   
@@ -31,6 +32,11 @@ describe ActionPresenter::Helpers do
         pending
       end
     end
+    
+    it "should not re-instanciate the presenter to each call" do
+      present(@article).should_not == present(Article.create)
+      present(@article).should == present(@article)
+    end
 
   end
 
@@ -45,6 +51,7 @@ describe ActionPresenter::Helpers do
 end
 
 describe ArticlePresenter do
+  
   include BeforeSpec
   
   before { load_env }

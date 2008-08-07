@@ -60,7 +60,7 @@ The partial for body will be located in app/presenters/article/body.html.erb :
 
 == Presenters in your plugins
 
-You can have presenters in plugins. Just create a directory app/presenters and you're ready to go. It's great if you have Engines too.
+You can have presenters in plugins, but you must have Engines installed. Just create a directory app/presenters and you're ready to go.
 
 == Contact
 
