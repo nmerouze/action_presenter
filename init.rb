@@ -10,3 +10,6 @@ config.after_initialize do
     end
   end
 end if defined? :Engines
+
+ActionView::Base.__send__ :include, ActionPresenter::Helpers
+ActionController::Base.__send__ :include, ActionPresenter::Helpers

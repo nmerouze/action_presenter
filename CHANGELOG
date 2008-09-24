@@ -1,3 +1,5 @@
+* present() and source() are now available in the controllers
+
 * You can have presenters in plugins elsewhere than vendor/plugins
 
 * Ability to create an iterator with present()

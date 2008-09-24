@@ -32,7 +32,10 @@ module ActionPresenter
     
     def present(records)
       presenters = []
-      records = [records] if not records.is_a? Array
+      unless records.is_a? Array
+        return_first = true 
+        records = [records]
+      end
       
       records.each do |record|
         @@presenters[record.to_s] = "#{record.class.name.classify}Presenter".constantize.new(@controller, record) unless @@presenters.has_key? record.to_s
@@ -41,7 +44,7 @@ module ActionPresenter
           yield @@presenters[record.to_s]
         else
           presenters << @@presenters[record.to_s]
-          return presenters.first if records.size == 1
+          return presenters.first if return_first
         end
       end
       
@@ -55,5 +58,3 @@ module ActionPresenter
     alias :s :source
   end
 end
-
-ActionView::Base.__send__ :include, ActionPresenter::Helpers
