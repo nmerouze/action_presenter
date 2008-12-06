@@ -1,3 +1,7 @@
+= Deprecated
+
+Use ar-presenter instead : http://github.com/nmerouze/ar-presenter
+
 = Action Presenter
 
 Inspired by : http://www.caboo.se/articles/2007/8/23/simple-presenters
